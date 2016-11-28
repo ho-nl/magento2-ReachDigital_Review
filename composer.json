@@ -1,5 +1,5 @@
 {
-    "name": "ho/review",
+    "name": "honl/magento2-review",
     "description": "",
     "require": {
         "php": "~7.0.0",
