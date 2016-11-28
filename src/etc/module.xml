@@ -8,6 +8,7 @@
     <module name="Ho_Review" setup_version="1.0.0">
         <sequence>
             <module name="Magento_Review"/>
+            <module name="Ho_Base"/>
         </sequence>
     </module>
 </config>

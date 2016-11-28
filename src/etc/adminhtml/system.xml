@@ -5,9 +5,6 @@
   -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
     <system>
-        <tab id="ho_config" translate="label" sortOrder="10">
-            <label>H&amp;O</label>
-        </tab>
         <section id="ho_review" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
             <label>Review Settings</label>
             <tab>ho_config</tab>
