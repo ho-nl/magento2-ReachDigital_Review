@@ -24,7 +24,7 @@ class InstallData implements InstallDataInterface
                 \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
                 null,
                 ['identity' => true, 'unsigned' => true, 'nullable' => false, 'primary' => true],
-                'Review entity id'
+                'Review consideration id'
             )
             ->addColumn(
                 'review_id',
