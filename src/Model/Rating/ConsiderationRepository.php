@@ -34,14 +34,12 @@ class ConsiderationRepository implements \Ho\Review\Api\RatingConsiderationRepos
     
     public function save(ConsiderationInterface $object)
     {
-        try
-        {
+        try {
             $object->save();
-        }
-        catch(Exception $e)
-        {
+        } catch(Exception $e) {
             throw new CouldNotSaveException($e->getMessage());
         }
+
         return $object;
     }
 
@@ -49,9 +47,11 @@ class ConsiderationRepository implements \Ho\Review\Api\RatingConsiderationRepos
     {
         $object = $this->objectFactory->create();
         $object->load($id);
-        if (!$object->getId()) {
+
+        if (! $object->getId()) {
             throw new NoSuchEntityException(__('Object with id "%1" does not exist.', $id));
         }
+
         return $object;        
     }       
 
@@ -62,6 +62,7 @@ class ConsiderationRepository implements \Ho\Review\Api\RatingConsiderationRepos
         } catch (Exception $exception) {
             throw new CouldNotDeleteException(__($exception->getMessage()));
         }
+
         return true;    
     }    
 
@@ -75,36 +76,46 @@ class ConsiderationRepository implements \Ho\Review\Api\RatingConsiderationRepos
         $searchResults = $this->searchResultsFactory->create();
         $searchResults->setSearchCriteria($criteria);  
         $collection = $this->collectionFactory->create();
+
         foreach ($criteria->getFilterGroups() as $filterGroup) {
             $fields = [];
             $conditions = [];
+
             foreach ($filterGroup->getFilters() as $filter) {
                 $condition = $filter->getConditionType() ? $filter->getConditionType() : 'eq';
                 $fields[] = $filter->getField();
                 $conditions[] = [$condition => $filter->getValue()];
             }
+
             if ($fields) {
                 $collection->addFieldToFilter($fields, $conditions);
             }
-        }  
+        }
+
         $searchResults->setTotalCount($collection->getSize());
         $sortOrders = $criteria->getSortOrders();
+
         if ($sortOrders) {
-            /** @var SortOrder $sortOrder */
             foreach ($sortOrders as $sortOrder) {
+                /** @var SortOrder $sortOrder */
+
                 $collection->addOrder(
                     $sortOrder->getField(),
                     ($sortOrder->getDirection() == SortOrder::SORT_ASC) ? 'ASC' : 'DESC'
                 );
             }
         }
+
         $collection->setCurPage($criteria->getCurrentPage());
         $collection->setPageSize($criteria->getPageSize());
         $objects = [];                                     
+
         foreach ($collection as $objectModel) {
             $objects[] = $objectModel;
         }
+
         $searchResults->setItems($objects);
-        return $searchResults;        
+
+        return $searchResults;
     }
 }

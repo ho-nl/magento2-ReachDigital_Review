@@ -57,6 +57,8 @@ class Form extends \Magento\Review\Block\Adminhtml\Edit\Form
      * Prepare edit review form.
      *
      * @return  Form
+     *
+     * @SuppressWarnings(PHPMD.NPathComplexity)
      */
     protected function _prepareForm()
     {
@@ -80,7 +82,9 @@ class Form extends \Magento\Review\Block\Adminhtml\Edit\Form
                 'label'         => __('Pro'),
                 'placeholder'   => __('Pro'),
                 'required'      => false,
-                'name'          => 'consideration_pros'.($i < $considerationPros->getTotalCount() ? '[exists]['.$pros[$i]->getId().']' : '[new][]'),
+                'name'          => 'consideration[pros]'.($i < $considerationPros->getTotalCount()
+                                    ? '[exists]['.$pros[$i]->getId().']'
+                                    : '[new][]'),
                 'value'         => isset($pros[$i]) ? $pros[$i]->getValue() : ''
             ]);
         }
@@ -100,7 +104,9 @@ class Form extends \Magento\Review\Block\Adminhtml\Edit\Form
                 'label'         => __('Con'),
                 'placeholder'   => __('Con'),
                 'required'      => false,
-                'name'          => 'consideration_cons'.($i < $considerationCons->getTotalCount() ? '[exists]['.$cons[$i]->getId().']' : '[new][]'),
+                'name'          => 'consideration[cons]'.($i < $considerationCons->getTotalCount()
+                                    ? '[exists]['.$cons[$i]->getId().']'
+                                    : '[new][]'),
                 'value'         => isset($cons[$i]) ? $cons[$i]->getValue() : ''
             ]);
         }
