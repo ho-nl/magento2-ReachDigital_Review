@@ -9,6 +9,8 @@ It's also possible to change the maximum amount of considerations.
 ```BASH
 composer config repositories.honl/honl/magento2-review vcs git@github.com:ho-nl/magento2-Ho_Review.git
 composer require honl/magento2-review
+
+bin/magento module:enable Ho_Review
 ```
 
 ## Todo
