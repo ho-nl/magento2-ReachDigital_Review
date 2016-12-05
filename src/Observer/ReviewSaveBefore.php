@@ -58,44 +58,64 @@ class ReviewSaveBefore implements ObserverInterface
         $review = $observer->getObject();
 
         /** Process pros */
-        $collection = $this->considerationCollectionFactory->create();
-        $collection
-            ->addFieldToFilter(ConsiderationInterface::REVIEW_ID, $review->getId())
-            ->addFieldToFilter(ConsiderationInterface::TYPE, ConsiderationInterface::CONSIDERATION_PROS)
-            ->walk('delete');
+        foreach ($review->getConsiderationPros() as $key => $consideration) {
+            if ($key === 'exists') {
+                foreach ($consideration as $entity_id => $pro) {
+                    $consideration = $this->considerationRepository->getById($entity_id);
+                    $consideration->setData('value', trim($pro));
 
-        $considerationProsArray = explode("\n",$review->getConsiderationPros());
-        foreach ($considerationProsArray as $pro) {
-            $consideration = $this->ratingConsiderationFactory->create();
+                    $this->considerationRepository->save($consideration);
+                }
+            } elseif ($key === 'new') {
+                foreach ($consideration as $pro) {
+                    if (empty($pro)) { continue; } // Don't save empty consideration.
 
-            $consideration->setData([
-                'review_id' => $review->getId(),
-                'type'      => ConsiderationInterface::CONSIDERATION_PROS,
-                'value'     => str_replace("\r", '', $pro),
-            ]);
+                    $consideration = $this->ratingConsiderationFactory->create();
 
-            $this->considerationRepository->save($consideration);
+                    $consideration->setData([
+                        'review_id' => $review->getId(),
+                        'type'      => ConsiderationInterface::CONSIDERATION_PROS,
+                        'value'     => trim($pro),
+                    ]);
+
+                    $this->considerationRepository->save($consideration);
+                }
+
+            }
         }
 
-        /** Process cons */
-        $collection = $this->considerationCollectionFactory->create();
-        $collection
-            ->addFieldToFilter(ConsiderationInterface::REVIEW_ID, $review->getId())
-            ->addFieldToFilter(ConsiderationInterface::TYPE, ConsiderationInterface::CONSIDERATION_CONS)
-            ->walk('delete');
-
-        $considerationConsArray = explode("\n",$review->getConsiderationCons());
-        foreach ($considerationConsArray as $con) {
-            $consideration = $this->ratingConsiderationFactory->create();
-
-            $consideration->setData([
-                'review_id' => $review->getId(),
-                'type'      => ConsiderationInterface::CONSIDERATION_PROS,
-                'value'     => str_replace("\r", '', $con),
-            ]);
-
-            $this->considerationRepository->save($consideration);
-        }
+//        exit;
+//        foreach ($considerationProsArray as $pro) {
+//            $consideration = $this->ratingConsiderationFactory->create();
+//
+//            $consideration->setData([
+//                'review_id' => $review->getId(),
+//                'type'      => ConsiderationInterface::CONSIDERATION_PROS,
+//                'value'     => str_replace("\r", '', $pro),
+//            ]);
+//
+//            $this->considerationRepository->save($consideration);
+//        }
+//
+//        /** Process cons */
+//        $collection = $this->considerationCollectionFactory->create();
+//        $collection
+//            ->addFieldToFilter(ConsiderationInterface::REVIEW_ID, $review->getId())
+//            ->addFieldToFilter(ConsiderationInterface::TYPE, ConsiderationInterface::CONSIDERATION_CONS)
+//            ->walk('delete');
+//
+//        $considerationConsArray = explode("\n",$review->getConsiderationCons());
+//        foreach ($considerationConsArray as $con) {
+//            $consideration = $this->ratingConsiderationFactory->create();
+//
+//            $consideration->setData([
+//                'review_id' => $review->getId(),
+//                'type'      => ConsiderationInterface::CONSIDERATION_CONS,
+//                'value'     => str_replace("\r", '', $con),
+//            ]);
+//
+//            $this->considerationRepository->save($consideration);
+//        }
 
         return $this;
     }

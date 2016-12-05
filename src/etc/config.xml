@@ -6,10 +6,11 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
     <default>
-        <ho_config>
-            <ho_review>
+        <ho_review>
+            <general>
                 <enabled>1</enabled>
-            </ho_review>
-        </ho_config>
+                <max_considerations>3</max_considerations>
+            </general>
+        </ho_review>
     </default>
 </config>

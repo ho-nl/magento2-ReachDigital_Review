@@ -13,8 +13,13 @@
                 <label>General</label>
 
                 <field id="enabled" translate="label" type="select" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="0" canRestore="1">
-                    <label>Enabled</label>
+                    <label>Enabled on Frontend</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+
+                <field id="max_considerations" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="0" showInStore="0" canRestore="1">
+                    <label>Maximal Considerations</label>
+                    <comment><![CDATA[Maximum amount for pros and cons.]]></comment>
                 </field>
             </group>
         </section>

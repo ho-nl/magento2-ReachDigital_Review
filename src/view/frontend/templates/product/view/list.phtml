@@ -47,7 +47,18 @@
                     </div>
                 <?php endif; ?>
                 <div class="review-content" itemprop="description">
-                    <?php echo nl2br($block->escapeHtml($_review->getDetail())) ?> - Rewritten
+                    <?php echo nl2br($block->escapeHtml($_review->getDetail())) ?>
+                    <ul><b><?php echo __('Pros') ?>:</b>
+                        <?php foreach ($block->getProsCollection($_review->getId()) as $pro): ?>
+                            <li><?php echo $pro->getData('value') ?></li>
+                        <?php endforeach; ?>
+                    </ul>
+
+                    <ul><b><?php echo __('Cons') ?>:</b>
+                        <?php foreach ($block->getConsCollection($_review->getId()) as $con): ?>
+                            <li><?php echo $con->getData('value') ?></li>
+                        <?php endforeach; ?>
+                    </ul>
                 </div>
                 <div class="review-details">
                     <p class="review-author">

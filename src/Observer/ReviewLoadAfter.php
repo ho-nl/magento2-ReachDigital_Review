@@ -63,7 +63,7 @@ class ReviewLoadAfter implements ObserverInterface
         )->create();
 
         $considerationProsCollection = $this->considerationRepository->getList($searchCriteria);
-        $review->setData('consideration_pros', $this->getColumnValues($considerationProsCollection, 'value'));
+        $review->setData('consideration_pros', $considerationProsCollection);
 
         $searchCriteria = $this->searchCriteriaBuilder->addFilter(
             ConsiderationInterface::TYPE,
@@ -71,24 +71,8 @@ class ReviewLoadAfter implements ObserverInterface
         )->create();
 
         $considerationConsCollection = $this->considerationRepository->getList($searchCriteria);
-        $review->setData('consideration_cons', $this->getColumnValues($considerationConsCollection, 'value'));
+        $review->setData('consideration_cons', $considerationConsCollection);
 
         return $this;
-    }
-
-    /**
-     * Retrieve field values from all items
-     *
-     * @param   string $colName
-     * @return  array
-     */
-    private function getColumnValues($collection, string $colName): array
-    {
-        $col = [];
-        foreach ($collection->getItems() as $item) {
-            $col[] = $item->getData($colName);
-        }
-
-        return $col;
     }
 }
