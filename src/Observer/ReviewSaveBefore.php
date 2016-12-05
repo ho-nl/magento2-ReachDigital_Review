@@ -55,67 +55,53 @@ class ReviewSaveBefore implements ObserverInterface
     public function execute(Observer $observer)
     {
         /** @var \Magento\Review\Model\Review $review */
-        $review = $observer->getObject();
+        $review = $observer->getData('object');
 
-        /** Process pros */
-        foreach ($review->getConsiderationPros() as $key => $consideration) {
-            if ($key === 'exists') {
-                foreach ($consideration as $entity_id => $pro) {
-                    $consideration = $this->considerationRepository->getById($entity_id);
-                    $consideration->setData('value', trim($pro));
+        foreach ($review->getData('consideration') as $type => $considerations) {
+            foreach ($considerations as $status => $consideration) {
+                if ($status === 'exists') {
+                    foreach ($consideration as $entity_id => $value) {
+                        $value = trim($value);
 
-                    $this->considerationRepository->save($consideration);
+                        // Delete entry if field is made empty.
+                        if (empty($value)) {
+                            $this->considerationRepository->deleteById($entity_id);
+                            continue;
+                        }
+
+                        $entity = $this->considerationRepository->getById($entity_id);
+
+                        if ($entity->getData('value') === $value) {
+                            continue; // Skip if value hasn't changed.
+                        }
+
+                        $entity->setData('value', $value);
+
+                        $this->considerationRepository->save($entity);
+                    }
+                } elseif ($status === 'new') {
+                    foreach ($consideration as $entity_id => $value) {
+                        $value = trim($value);
+
+                        if (empty($value)) {
+                            continue; // Don't save empty entry.
+                        }
+
+                        $entity = $this->ratingConsiderationFactory->create();
+
+                        $entity->setData([
+                            'review_id' => $review->getId(),
+                            'type'      => $type === 'pros'
+                                                ? ConsiderationInterface::CONSIDERATION_PROS
+                                                : ConsiderationInterface::CONSIDERATION_CONS,
+                            'value'     => $value,
+                        ]);
+
+                        $this->considerationRepository->save($entity);
+                    }
                 }
-            } elseif ($key === 'new') {
-                foreach ($consideration as $pro) {
-                    if (empty($pro)) { continue; } // Don't save empty consideration.
-
-                    $consideration = $this->ratingConsiderationFactory->create();
-
-                    $consideration->setData([
-                        'review_id' => $review->getId(),
-                        'type'      => ConsiderationInterface::CONSIDERATION_PROS,
-                        'value'     => trim($pro),
-                    ]);
-
-                    $this->considerationRepository->save($consideration);
-                }
-
             }
         }
-
-//        exit;
-//        foreach ($considerationProsArray as $pro) {
-//            $consideration = $this->ratingConsiderationFactory->create();
-//
-//            $consideration->setData([
-//                'review_id' => $review->getId(),
-//                'type'      => ConsiderationInterface::CONSIDERATION_PROS,
-//                'value'     => str_replace("\r", '', $pro),
-//            ]);
-//
-//            $this->considerationRepository->save($consideration);
-//        }
-//
-//        /** Process cons */
-//        $collection = $this->considerationCollectionFactory->create();
-//        $collection
-//            ->addFieldToFilter(ConsiderationInterface::REVIEW_ID, $review->getId())
-//            ->addFieldToFilter(ConsiderationInterface::TYPE, ConsiderationInterface::CONSIDERATION_CONS)
-//            ->walk('delete');
-//
-//        $considerationConsArray = explode("\n",$review->getConsiderationCons());
-//        foreach ($considerationConsArray as $con) {
-//            $consideration = $this->ratingConsiderationFactory->create();
-//
-//            $consideration->setData([
-//                'review_id' => $review->getId(),
-//                'type'      => ConsiderationInterface::CONSIDERATION_CONS,
-//                'value'     => str_replace("\r", '', $con),
-//            ]);
-//
-//            $this->considerationRepository->save($consideration);
-//        }
 
         return $this;
     }
