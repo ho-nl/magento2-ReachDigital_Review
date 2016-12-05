@@ -48,17 +48,26 @@
                 <?php endif; ?>
                 <div class="review-content" itemprop="description">
                     <?php echo nl2br($block->escapeHtml($_review->getDetail())) ?>
-                    <ul><b><?php echo __('Pros') ?>:</b>
-                        <?php foreach ($block->getProsCollection($_review->getId()) as $pro): ?>
-                            <li><?php echo $pro->getData('value') ?></li>
-                        <?php endforeach; ?>
-                    </ul>
 
-                    <ul><b><?php echo __('Cons') ?>:</b>
-                        <?php foreach ($block->getConsCollection($_review->getId()) as $con): ?>
-                            <li><?php echo $con->getData('value') ?></li>
-                        <?php endforeach; ?>
-                    </ul>
+                    <?php if ($this->helper('Ho\Review\Helper\Data')->isEnabled()): ?>
+                        <?php $pros = $block->getProsCollection($_review->getId()); ?>
+                        <?php if ($pros->count() > 0): ?>
+                            <ul><b><?php echo __('Pros') ?>:</b>
+                                <?php foreach ($pros as $pro): ?>
+                                    <li><?php echo $pro->getData('value') ?></li>
+                                <?php endforeach; ?>
+                            </ul>
+                        <?php endif; ?>
+
+                        <?php $cons = $block->getConsCollection($_review->getId()); ?>
+                        <?php if ($cons->count() > 0): ?>
+                            <ul><b><?php echo __('Cons') ?>:</b>
+                                <?php foreach ($cons as $con): ?>
+                                    <li><?php echo $con->getData('value') ?></li>
+                                <?php endforeach; ?>
+                            </ul>
+                        <?php endif; ?>
+                    <?php endif; ?>
                 </div>
                 <div class="review-details">
                     <p class="review-author">

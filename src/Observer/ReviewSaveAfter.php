@@ -8,6 +8,7 @@ namespace Ho\Review\Observer;
 
 use Ho\Review\Api\Data\ConsiderationInterface;
 use Ho\Review\Api\RatingConsiderationRepositoryInterface;
+use Ho\Review\Helper\Data;
 use Ho\Review\Model\Rating\ConsiderationFactory;
 use Ho\Review\Model\ResourceModel\Rating\Consideration\CollectionFactory;
 use Magento\Framework\Event\Observer;
@@ -15,36 +16,37 @@ use Magento\Framework\Event\ObserverInterface;
 
 class ReviewSaveAfter implements ObserverInterface
 {
-    /**
-     * @var RatingConsiderationRepositoryInterface
-     */
+    /** @var RatingConsiderationRepositoryInterface */
     private $considerationRepository;
 
-    /**
-     * @var ConsiderationFactory
-     */
+    /** @var ConsiderationFactory */
     private $ratingConsiderationFactory;
 
-    /**
-     * @var CollectionFactory
-     */
+    /** @var CollectionFactory */
     private $considerationCollectionFactory;
 
+    /** @var Data */
+    private $helper;
+
     /**
-     * ReviewSaveBefore constructor.
+     * ReviewSaveAfter constructor.
      *
      * @param RatingConsiderationRepositoryInterface $considerationRepository
      * @param CollectionFactory                      $considerationCollectionFactory
      * @param ConsiderationFactory                   $ratingConsiderationFactory
+     * @param Data                                   $helper
      */
     public function __construct(
         RatingConsiderationRepositoryInterface $considerationRepository,
         CollectionFactory $considerationCollectionFactory,
-        ConsiderationFactory $ratingConsiderationFactory
+        ConsiderationFactory $ratingConsiderationFactory,
+        Data $helper
     ) {
+
         $this->considerationRepository          = $considerationRepository;
         $this->ratingConsiderationFactory       = $ratingConsiderationFactory;
         $this->considerationCollectionFactory   = $considerationCollectionFactory;
+        $this->helper                           = $helper;
     }
 
     /**
@@ -54,6 +56,10 @@ class ReviewSaveAfter implements ObserverInterface
      */
     public function execute(Observer $observer)
     {
+        if (! $this->helper->isEnabled()) {
+            return $this;
+        }
+
         /** @var \Magento\Review\Model\Review $review */
         $review = $observer->getData('object');
 
