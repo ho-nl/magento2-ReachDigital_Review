@@ -13,7 +13,7 @@ use Ho\Review\Model\ResourceModel\Rating\Consideration\CollectionFactory;
 use Magento\Framework\Event\Observer;
 use Magento\Framework\Event\ObserverInterface;
 
-class ReviewSaveBefore implements ObserverInterface
+class ReviewSaveAfter implements ObserverInterface
 {
     /**
      * @var RatingConsiderationRepositoryInterface
@@ -50,7 +50,7 @@ class ReviewSaveBefore implements ObserverInterface
     /**
      * @param Observer $observer
      *
-     * @return ReviewSaveBefore
+     * @return ReviewSaveAfter
      */
     public function execute(Observer $observer)
     {

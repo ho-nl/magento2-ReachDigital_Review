@@ -57,18 +57,18 @@ class ReviewLoadAfter implements ObserverInterface
         /** @var \Magento\Review\Model\Review $review */
         $review = $observer->getObject();
 
-        $searchCriteria = $this->searchCriteriaBuilder->addFilter(
-            ConsiderationInterface::TYPE,
-            ConsiderationInterface::CONSIDERATION_PROS
-        )->create();
+        $searchCriteria = $this->searchCriteriaBuilder
+            ->addFilter(ConsiderationInterface::REVIEW_ID, $review->getId())
+            ->addFilter(ConsiderationInterface::TYPE, ConsiderationInterface::CONSIDERATION_PROS)
+            ->create();
 
         $considerationProsCollection = $this->considerationRepository->getList($searchCriteria);
         $review->setData('consideration_pros', $considerationProsCollection);
 
-        $searchCriteria = $this->searchCriteriaBuilder->addFilter(
-            ConsiderationInterface::TYPE,
-            ConsiderationInterface::CONSIDERATION_CONS
-        )->create();
+        $searchCriteria = $this->searchCriteriaBuilder
+            ->addFilter(ConsiderationInterface::REVIEW_ID, $review->getId())
+            ->addFilter(ConsiderationInterface::TYPE, ConsiderationInterface::CONSIDERATION_CONS)
+            ->create();
 
         $considerationConsCollection = $this->considerationRepository->getList($searchCriteria);
         $review->setData('consideration_cons', $considerationConsCollection);

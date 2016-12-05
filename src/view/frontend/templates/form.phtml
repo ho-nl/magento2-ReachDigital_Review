@@ -80,14 +80,14 @@
                 <div>
                     <label><?php echo __('Pros') ?></label>
                     <?php for ($i = 0; $i < $this->helper('Ho\Review\Helper\Data')->getMaxConsiderations(); $i++): ?>
-                        <p><input type="text" name="consideration_pros[]" id="review_field" class="input-text" title="<?php echo __('Pros') ?>" placeholder="<?php echo __('Pro') ?>" /></p>
+                        <p><input type="text" name="consideration[pros][new][]" id="review_field" class="input-text" title="<?php echo __('Pros') ?>" placeholder="<?php echo __('Pro') ?>" /></p>
                     <?php endfor; ?>
                 </div>
 
                 <div>
                     <label><?php echo __('Cons') ?></label>
                     <?php for ($i = 0; $i < $this->helper('Ho\Review\Helper\Data')->getMaxConsiderations(); $i++): ?>
-                        <p><input type="text" name="consideration_cons[]" id="review_field" class="input-text" title="<?php echo __('Cons') ?>" placeholder="<?php echo __('Con') ?>" /></p>
+                        <p><input type="text" name="consideration[cons][new][]" id="review_field" class="input-text" title="<?php echo __('Cons') ?>" placeholder="<?php echo __('Con') ?>" /></p>
                     <?php endfor; ?>
                 </div>
             </li>

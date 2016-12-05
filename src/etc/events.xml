@@ -8,7 +8,7 @@
         <observer name="ho_review_review_load_after" instance="Ho\Review\Observer\ReviewLoadAfter"/>
     </event>
 
-    <event name="review_save_before">
-        <observer name="ho_review_review_save_before" instance="Ho\Review\Observer\ReviewSaveBefore"/>
+    <event name="review_save_after">
+        <observer name="ho_review_review_save_after" instance="Ho\Review\Observer\ReviewSaveAfter"/>
     </event>
 </config>
