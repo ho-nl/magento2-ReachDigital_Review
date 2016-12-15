@@ -16,6 +16,7 @@ bin/magento module:enable Ho_Review
 ## Todo
 - [ ] Styling.
 - [ ] Update screenshots after styling?
+- [ ] Move import of Magento 1 considerations to command.
 
 ## Mobile
 <img src="docs/frontend.png" width="49%" />

@@ -8,4 +8,12 @@
     <preference for="Ho\Review\Api\RatingConsiderationRepositoryInterface" type="Ho\Review\Model\Rating\ConsiderationRepository" />
     <preference for="Magento\Review\Block\Product\View\ListView" type="Ho\Review\Block\Product\View\ListView" />
     <preference for="Magento\Review\Block\Form" type="Ho\Review\Block\Form" />
+
+    <type name="Magento\Framework\Console\CommandList">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="ho_import_considerations" xsi:type="object">Ho\Review\Command\ImportConsiderations</item>
+            </argument>
+        </arguments>
+    </type>
 </config>
