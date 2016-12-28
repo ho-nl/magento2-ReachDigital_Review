@@ -36,8 +36,8 @@
                     <div class="rating-summary item" itemprop="reviewRating" itemscope itemtype="http://schema.org/Rating">
                         <span class="label rating-label"><span><?php echo $block->escapeHtml($_vote->getRatingCode()) ?></span></span>
                         <div class="rating-result" title="<?php /* @escapeNotVerified */ echo $_vote->getPercent() ?>%">
-	                        <meta itemprop="worstRating" content = "1"/>
-	                        <meta itemprop="bestRating" content = "100"/>
+                        <meta itemprop="worstRating" content = "1"/>
+                        <meta itemprop="bestRating" content = "100"/>
                             <span style="width:<?php /* @escapeNotVerified */ echo $_vote->getPercent() ?>%">
                                 <span itemprop="ratingValue"><?php /* @escapeNotVerified */ echo $_vote->getPercent() ?>%</span>
                             </span>
@@ -47,38 +47,46 @@
                     </div>
                 <?php endif; ?>
                 <div class="review-content" itemprop="description">
-                    <?php echo nl2br($block->escapeHtml($_review->getDetail())) ?>
+                    <div class="review-text">
+                        <?php echo nl2br($block->escapeHtml($_review->getDetail())) ?>
+                    </div>
 
                     <?php if ($this->helper('Ho\Review\Helper\Data')->isEnabled()): ?>
                         <?php $pros = $block->getProsCollection($_review->getId()); ?>
                         <?php if ($pros->count() > 0): ?>
-                            <ul><b><?php echo __('Pros') ?>:</b>
-                                <?php foreach ($pros as $pro): ?>
+                            <div class="pros">
+                                <strong><?php echo __('Pros') ?>:</strong>
+                                <ul>
+                                    <?php foreach ($pros as $pro): ?>
                                     <li><?php echo $pro->getData('value') ?></li>
-                                <?php endforeach; ?>
-                            </ul>
+                                    <?php endforeach; ?>
+                                </ul>
+                            </div>
                         <?php endif; ?>
 
                         <?php $cons = $block->getConsCollection($_review->getId()); ?>
                         <?php if ($cons->count() > 0): ?>
-                            <ul><b><?php echo __('Cons') ?>:</b>
-                                <?php foreach ($cons as $con): ?>
+                            <div class="cons">
+                                <strong><?php echo __('Cons') ?>:</strong>
+                                <ul>
+                                    <?php foreach ($cons as $con): ?>
                                     <li><?php echo $con->getData('value') ?></li>
-                                <?php endforeach; ?>
-                            </ul>
+                                    <?php endforeach; ?>
+                                </ul>
+                            </div>
                         <?php endif; ?>
                     <?php endif; ?>
                 </div>
-                <div class="review-details">
-                    <p class="review-author">
+                <small class="review-details text-muted">
+                    <span class="review-author">
                         <span class="review-details-label"><?php /* @escapeNotVerified */ echo __('Review by')?></span>
                         <strong class="review-details-value" itemprop="author"><?php echo $block->escapeHtml($_review->getNickname()) ?></strong>
-                    </p>
-                    <p class="review-date">
+                    </span>
+                    <span class="review-date">
                         <span class="review-details-label"><?php /* @escapeNotVerified */ echo __('Posted on') ?></span>
                         <time class="review-details-value" itemprop="datePublished" datetime="<?php /* @escapeNotVerified */ echo $block->formatDate($_review->getCreatedAt(), $format) ?>"><?php /* @escapeNotVerified */ echo $block->formatDate($_review->getCreatedAt(), $format) ?></time>
-                    </p>
-                </div>
+                    </span>
+                </small>
             </li>
         <?php endforeach; ?>
         </ol>
@@ -88,3 +96,4 @@
     </div>
 </div>
 <?php endif;?>
+
