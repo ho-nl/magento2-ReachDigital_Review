@@ -13,7 +13,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
      */
     public function isEnabled()
     {
-        return (bool) $this->scopeConfig->getValue('ho_review/general/enabled');
+        return (bool) $this->scopeConfig->getValue('catalog/review/considerations_enabled');
     }
 
     /**
@@ -21,6 +21,6 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
      */
     public function getMaxConsiderations()
     {
-        return (int) $this->scopeConfig->getValue('ho_review/general/max_considerations');
+        return (int) $this->scopeConfig->getValue('catalog/review/max_considerations');
     }
 }
