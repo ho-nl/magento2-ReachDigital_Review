@@ -5,8 +5,7 @@
   -->
 
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
-    <preference for="Magento\Review\Block\Adminhtml\Edit\Form" type="Ho\Review\Block\Adminhtml\Edit\Form" />
-    <preference for="Ho\Review\Api\RatingConsiderationRepositoryInterface" type="Ho\Review\Model\Rating\ConsiderationRepository" />
-    <preference for="Magento\Review\Block\Product\View\ListView" type="Ho\Review\Block\Product\View\ListView" />
-    <preference for="Magento\Review\Block\Form" type="Ho\Review\Block\Form" />
+    <preference for="Ho\Review\Api\RatingConsiderationRepositoryInterface" type="Ho\Review\Model\Rating\ConsiderationRepository"/>
+    <preference for="Magento\Review\Block\Adminhtml\Edit\Form" type="Ho\Review\Block\Adminhtml\Edit\Form"/>
+    <preference for="Magento\Review\Block\Form" type="Ho\Review\Block\Form"/>
 </config>

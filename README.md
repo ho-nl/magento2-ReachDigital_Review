@@ -1,25 +1,18 @@
-# H&O Review
+# Reach Digital Review
 Add pros and cons to reviews.
 
-## Considerations (KINGDO-67, 5pnt)
-Configurations can be found in **Stores > Configuration > H&O > Review Settings**. From there the module output on the frontend can be enabled/disabled.
+## Considerations
+Configurations can be found in **Stores > Configuration > Catalog > Product Reviews**. From there the module output on the frontend can be enabled/disabled.
 It's also possible to change the maximum amount of considerations.
 
 ## Installation
 ```BASH
-composer config repositories.honl/honl/magento2-review vcs git@github.com:ho-nl/magento2-Ho_Review.git
 composer require honl/magento2-review
-
-bin/magento module:enable Ho_Review
+php bin/magento module:enable Ho_Review
 ```
 
-## Todo
-- [ ] Styling.
-- [ ] Update screenshots after styling?
-- [ ] Move import of Magento 1 considerations to command.
-
 ## Mobile
-<img src="docs/frontend.png" width="49%" />
+<img src="https://github.com/ho-nl/magento2-ReachDigital_Review/blob/master/docs/frontend.png?raw=true" width="49%"/>
 
 ## Desktop
-<img src="docs/admin.png" width="100%" />
+<img src="https://github.com/ho-nl/magento2-ReachDigital_Review/blob/master/docs/admin.png?raw=true" width="100%"/>

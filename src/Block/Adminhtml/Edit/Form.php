@@ -6,18 +6,12 @@
 
 namespace Ho\Review\Block\Adminhtml\Edit;
 
-use \Ho\Review\Helper\Data;
-
 class Form extends \Magento\Review\Block\Adminhtml\Edit\Form
 {
-    /**
-     * @var Data
-     */
-    private $helper;
+    /** @var \Ho\Review\Helper\Data $considerationHelper */
+    private $considerationHelper;
 
     /**
-     * Form constructor.
-     *
      * @param \Magento\Backend\Block\Template\Context           $context
      * @param \Magento\Framework\Registry                       $registry
      * @param \Magento\Framework\Data\FormFactory               $formFactory
@@ -25,7 +19,7 @@ class Form extends \Magento\Review\Block\Adminhtml\Edit\Form
      * @param \Magento\Customer\Api\CustomerRepositoryInterface $customerRepository
      * @param \Magento\Catalog\Model\ProductFactory             $productFactory
      * @param \Magento\Review\Helper\Data                       $reviewData
-     * @param Data                                              $helper
+     * @param \Ho\Review\Helper\Data                            $considerationHelper
      * @param array                                             $data
      */
     public function __construct(
@@ -36,8 +30,8 @@ class Form extends \Magento\Review\Block\Adminhtml\Edit\Form
         \Magento\Customer\Api\CustomerRepositoryInterface $customerRepository,
         \Magento\Catalog\Model\ProductFactory $productFactory,
         \Magento\Review\Helper\Data $reviewData,
-        Data $helper,
-        array $data
+        \Ho\Review\Helper\Data $considerationHelper,
+        array $data = []
     ) {
         parent::__construct(
             $context,
@@ -50,15 +44,11 @@ class Form extends \Magento\Review\Block\Adminhtml\Edit\Form
             $data
         );
 
-        $this->helper = $helper;
+        $this->considerationHelper = $considerationHelper;
     }
 
     /**
-     * Prepare edit review form.
-     *
-     * @return  Form
-     *
-     * @SuppressWarnings(PHPMD.NPathComplexity)
+     * {@inheritdoc}
      */
     protected function _prepareForm()
     {
@@ -74,10 +64,10 @@ class Form extends \Magento\Review\Block\Adminhtml\Edit\Form
         );
 
         /** @var \Magento\Framework\Api\SearchResults $considerationPros */
-        $considerationPros  = $review->getConsiderationPros();
-        $pros               = $considerationPros->getItems();
+        $considerationPros = $review->getConsiderationPros();
+        $pros = $considerationPros->getItems();
 
-        for ($i = 0; $i < $this->helper->getMaxConsiderations(); $i++) {
+        for ($i = 0; $i < $this->considerationHelper->getMaxConsiderations(); $i++) {
             $fieldset->addField('consideration_pro_'.$i, 'text', [
                 'label'         => __('Pro'),
                 'placeholder'   => __('Pro'),
@@ -96,10 +86,10 @@ class Form extends \Magento\Review\Block\Adminhtml\Edit\Form
         );
 
         /** @var \Magento\Framework\Api\SearchResults $considerationCons */
-        $considerationCons  = $review->getConsiderationCons();
-        $cons               = $considerationCons->getItems();
+        $considerationCons = $review->getConsiderationCons();
+        $cons = $considerationCons->getItems();
 
-        for ($i = 0; $i < $this->helper->getMaxConsiderations(); $i++) {
+        for ($i = 0; $i < $this->considerationHelper->getMaxConsiderations(); $i++) {
             $fieldset->addField('consideration_con_'.$i, 'text', [
                 'label'         => __('Con'),
                 'placeholder'   => __('Con'),

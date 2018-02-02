@@ -8,46 +8,32 @@ namespace Ho\Review\Observer;
 
 use Ho\Review\Api\Data\ConsiderationInterface;
 use Ho\Review\Api\RatingConsiderationRepositoryInterface;
-use Magento\Framework\Api\FilterBuilder;
 use Magento\Framework\Api\SearchCriteriaBuilder;
 use Magento\Framework\Event\Observer;
 use Magento\Framework\Event\ObserverInterface;
 
 class ReviewLoadAfter implements ObserverInterface
 {
-    /**
-     * @var RatingConsiderationRepositoryInterface
-     */
+    /** @var RatingConsiderationRepositoryInterface $considerationRepository */
     private $considerationRepository;
 
-    /**
-     * @var SearchCriteriaBuilder
-     */
+    /** @var SearchCriteriaBuilder $searchCriteriaBuilder */
     private $searchCriteriaBuilder;
 
     /**
-     * @var FilterBuilder
-     */
-    private $filterBuilder;
-
-    /**
-     * ReviewLoadAfter constructor.
-     *
      * @param RatingConsiderationRepositoryInterface $considerationRepository
      * @param SearchCriteriaBuilder                  $searchCriteriaBuilder
-     * @param FilterBuilder                          $filterBuilder
      */
     public function __construct(
         RatingConsiderationRepositoryInterface $considerationRepository,
-        SearchCriteriaBuilder $searchCriteriaBuilder,
-        FilterBuilder $filterBuilder
+        SearchCriteriaBuilder $searchCriteriaBuilder
     ) {
-        $this->considerationRepository  = $considerationRepository;
-        $this->searchCriteriaBuilder    = $searchCriteriaBuilder;
-        $this->filterBuilder            = $filterBuilder;
+        $this->considerationRepository = $considerationRepository;
+        $this->searchCriteriaBuilder = $searchCriteriaBuilder;
     }
 
     /**
+     * @event review_load_after
      * @param Observer $observer
      *
      * @return ReviewLoadAfter

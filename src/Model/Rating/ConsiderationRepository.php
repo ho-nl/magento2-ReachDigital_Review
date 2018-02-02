@@ -6,10 +6,11 @@
 
 namespace Ho\Review\Model\Rating;
 
-use Ho\Review\Model\Rating\ConsiderationInterface;
+use Ho\Review\Api\Data\ConsiderationInterface;
 use Ho\Review\Model\Rating\ConsiderationFactory;
 use Ho\Review\Model\ResourceModel\Rating\Consideration\CollectionFactory;
 use Magento\Framework\Api\SearchCriteriaInterface;
+use Magento\Framework\Api\SearchResultsInterface;
 use Magento\Framework\Api\SearchResultsInterfaceFactory;
 use Magento\Framework\Api\SortOrder;
 use Magento\Framework\Exception\CouldNotSaveException;
@@ -18,32 +19,48 @@ use Magento\Framework\Exception\CouldNotDeleteException;
 
 class ConsiderationRepository implements \Ho\Review\Api\RatingConsiderationRepositoryInterface
 {
-    protected $objectFactory;
-    protected $collectionFactory;
-    protected $searchResultsFactory;
+    /** @var ConsiderationFactory $objectFactory */
+    private $objectFactory;
 
+    /** @var CollectionFactory $collectionFactory */
+    private $collectionFactory;
+
+    /** @var SearchResultsInterfaceFactory $searchResultsFactory */
+    private $searchResultsFactory;
+
+    /**
+     * @param ConsiderationFactory          $objectFactory
+     * @param CollectionFactory             $collectionFactory
+     * @param SearchResultsInterfaceFactory $searchResultsFactory
+     */
     public function __construct(
         ConsiderationFactory $objectFactory,
         CollectionFactory $collectionFactory,
         SearchResultsInterfaceFactory $searchResultsFactory       
     ) {
-        $this->objectFactory        = $objectFactory;
-        $this->collectionFactory    = $collectionFactory;
+        $this->objectFactory = $objectFactory;
+        $this->collectionFactory = $collectionFactory;
         $this->searchResultsFactory = $searchResultsFactory;
     }
-    
-    public function save(ConsiderationInterface $object)
+
+    /**
+     * {@inheritdoc}
+     */
+    public function save(ConsiderationInterface $object): ConsiderationInterface
     {
         try {
             $object->save();
-        } catch(Exception $e) {
-            throw new CouldNotSaveException($e->getMessage());
+        } catch(\Exception $e) {
+            throw new CouldNotSaveException(__($e->getMessage()));
         }
 
         return $object;
     }
 
-    public function getById($id)
+    /**
+     * {@inheritdoc}
+     */
+    public function getById($id): ConsiderationInterface
     {
         $object = $this->objectFactory->create();
         $object->load($id);
@@ -53,25 +70,34 @@ class ConsiderationRepository implements \Ho\Review\Api\RatingConsiderationRepos
         }
 
         return $object;        
-    }       
+    }
 
-    public function delete(ConsiderationInterface $object)
+    /**
+     * {@inheritdoc}
+     */
+    public function delete(ConsiderationInterface $object): bool
     {
         try {
             $object->delete();
-        } catch (Exception $exception) {
+        } catch (\Exception $exception) {
             throw new CouldNotDeleteException(__($exception->getMessage()));
         }
 
         return true;    
-    }    
+    }
 
-    public function deleteById($id)
+    /**
+     * {@inheritdoc}
+     */
+    public function deleteById($id): bool
     {
         return $this->delete($this->getById($id));
-    }    
+    }
 
-    public function getList(SearchCriteriaInterface $criteria)
+    /**
+     * {@inheritdoc}
+     */
+    public function getList(SearchCriteriaInterface $criteria): SearchResultsInterface
     {
         $searchResults = $this->searchResultsFactory->create();
         $searchResults->setSearchCriteria($criteria);  
@@ -82,7 +108,7 @@ class ConsiderationRepository implements \Ho\Review\Api\RatingConsiderationRepos
             $conditions = [];
 
             foreach ($filterGroup->getFilters() as $filter) {
-                $condition = $filter->getConditionType() ? $filter->getConditionType() : 'eq';
+                $condition = $filter->getConditionType() ?: 'eq';
                 $fields[] = $filter->getField();
                 $conditions[] = [$condition => $filter->getValue()];
             }
@@ -101,7 +127,7 @@ class ConsiderationRepository implements \Ho\Review\Api\RatingConsiderationRepos
 
                 $collection->addOrder(
                     $sortOrder->getField(),
-                    ($sortOrder->getDirection() == SortOrder::SORT_ASC) ? 'ASC' : 'DESC'
+                    ($sortOrder->getDirection() === SortOrder::SORT_ASC) ? 'ASC' : 'DESC'
                 );
             }
         }

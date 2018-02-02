@@ -14,6 +14,7 @@ class InstallData implements InstallDataInterface
 {
     /**
      * {@inheritdoc}
+     * @throws \Zend_Db_Exception
      */
     public function install(ModuleDataSetupInterface $setup, ModuleContextInterface $context)
     {

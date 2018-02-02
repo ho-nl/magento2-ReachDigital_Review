@@ -6,18 +6,66 @@
 
 namespace Ho\Review\Api;
 
-use Ho\Review\Model\Rating\ConsiderationInterface;
+use Ho\Review\Api\Data\ConsiderationInterface;
 use Magento\Framework\Api\SearchCriteriaInterface;
+use Magento\Framework\Api\SearchResultsInterface;
+use Magento\Framework\Exception\CouldNotDeleteException;
+use Magento\Framework\Exception\CouldNotSaveException;
+use Magento\Framework\Exception\NoSuchEntityException;
 
 interface RatingConsiderationRepositoryInterface
 {
-    public function save(ConsiderationInterface $page);
+    /**
+     * Create or update a Considerations.
+     *
+     * @param ConsiderationInterface $object
+     *
+     * @throws CouldNotSaveException
+     *
+     * @return ConsiderationInterface
+     */
+    public function save(ConsiderationInterface $object): ConsiderationInterface;
 
-    public function getById($id);
+    /**
+     * Get Considerations by ID.
+     *
+     * @param $id
+     *
+     * @throws NoSuchEntityException
+     *
+     * @return ConsiderationInterface
+     */
+    public function getById($id): ConsiderationInterface;
 
-    public function getList(SearchCriteriaInterface $criteria);
+    /**
+     * Retrieve all Considerations for entity type.
+     *
+     * @param SearchCriteriaInterface $criteria
+     *
+     * @return SearchResultsInterface
+     */
+    public function getList(SearchCriteriaInterface $criteria): SearchResultsInterface;
 
-    public function delete(ConsiderationInterface $page);
+    /**
+     * Delete Consideration.
+     *
+     * @param ConsiderationInterface $object
+     *
+     * @throws CouldNotDeleteException
+     *
+     * @return bool
+     */
+    public function delete(ConsiderationInterface $object): bool;
 
-    public function deleteById($id);
+    /**
+     * Delete Consideration by ID.
+     *
+     * @param $id
+     *
+     * @throws NoSuchEntityException
+     * @throws CouldNotDeleteException
+     *
+     * @return bool
+     */
+    public function deleteById($id): bool;
 }

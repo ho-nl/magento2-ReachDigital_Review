@@ -9,14 +9,12 @@ namespace Ho\Review\Block;
 class Form extends \Magento\Review\Block\Form
 {
     /**
-     * Initialize review form.
-     *
-     * @return void
+     * {@inheritdoc}
      */
     protected function _construct()
     {
         parent::_construct();
 
-        $this->setTemplate('form.phtml');
+        $this->setTemplate('Ho_Review::form.phtml');
     }
 }

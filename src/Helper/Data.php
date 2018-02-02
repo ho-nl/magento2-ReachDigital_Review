@@ -6,21 +6,72 @@
 
 namespace Ho\Review\Helper;
 
-class Data extends \Magento\Framework\App\Helper\AbstractHelper
+use Ho\Review\Api\Data\ConsiderationInterface;
+use Ho\Review\Model\ResourceModel\Rating\Consideration\Collection;
+use Ho\Review\Model\ResourceModel\Rating\Consideration\CollectionFactory;
+use Magento\Framework\App\Helper\AbstractHelper;
+use Magento\Framework\App\Helper\Context;
+use Magento\Review\Model\Review;
+
+class Data extends AbstractHelper
 {
+    /** @var CollectionFactory $considerationCollectionFactory */
+    private $considerationCollectionFactory;
+
     /**
-     * @return  bool
+     * @param Context           $context
+     * @param CollectionFactory $considerationCollectionFactory
      */
-    public function isEnabled()
+    public function __construct(Context $context, CollectionFactory $considerationCollectionFactory)
     {
-        return (bool) $this->scopeConfig->getValue('ho_review/general/enabled');
+        parent::__construct($context);
+
+        $this->considerationCollectionFactory = $considerationCollectionFactory;
     }
 
     /**
-     * @return  int
+     * @return bool
      */
-    public function getMaxConsiderations()
+    public function isEnabled(): bool
     {
-        return (int) $this->scopeConfig->getValue('ho_review/general/max_considerations');
+        return (bool) $this->scopeConfig->getValue('catalog/review/considerations_enabled');
+    }
+
+    /**
+     * @return int
+     */
+    public function getMaxConsiderations(): int
+    {
+        return (int) $this->scopeConfig->getValue('catalog/review/max_considerations');
+    }
+
+    /**
+     * @param Review $review
+     *
+     * @return Collection
+     */
+    public function getProsCollection(Review $review): Collection
+    {
+        $collection = $this->considerationCollectionFactory->create();
+        $collection
+            ->addFieldToFilter(ConsiderationInterface::REVIEW_ID, $review->getId())
+            ->addFieldToFilter(ConsiderationInterface::TYPE, ConsiderationInterface::CONSIDERATION_PROS);
+
+        return $collection;
+    }
+
+    /**
+     * @param Review $review
+     *
+     * @return Collection
+     */
+    public function getConsCollection(Review $review): Collection
+    {
+        $collection = $this->considerationCollectionFactory->create();
+        $collection
+            ->addFieldToFilter(ConsiderationInterface::REVIEW_ID, $review->getId())
+            ->addFieldToFilter(ConsiderationInterface::TYPE, ConsiderationInterface::CONSIDERATION_CONS);
+
+        return $collection;
     }
 }

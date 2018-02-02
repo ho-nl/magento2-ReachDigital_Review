@@ -5,7 +5,5 @@
   -->
 
 <layout xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/layout_generic.xsd">
-    <container name="root">
-        <block class="Magento\Review\Block\Product\View\ListView" name="product.info.product_additional_data" as="product_additional_data" template="product/view/list.phtml" />
-    </container>
+    <referenceBlock name="product.info.product_additional_data" template="Ho_Review::product/view/list.phtml"/>
 </layout>

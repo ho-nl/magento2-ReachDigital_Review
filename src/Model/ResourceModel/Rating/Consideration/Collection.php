@@ -12,6 +12,9 @@ class Collection extends AbstractCollection
 {
     protected function _construct()
     {
-        $this->_init('Ho\Review\Model\Rating\Consideration', 'Ho\Review\Model\ResourceModel\Rating\Consideration');
+        $this->_init(
+            \Ho\Review\Model\Rating\Consideration::class,
+            \Ho\Review\Model\ResourceModel\Rating\Consideration::class
+        );
     }
 }
