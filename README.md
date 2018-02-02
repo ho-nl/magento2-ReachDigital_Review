@@ -1,5 +1,5 @@
 # Reach Digital Review
-Add pros and cons to reviews.
+Add pros and cons to reviews. For Magento 2.1.x please use version 1.1 of this extension.
 
 ## Considerations
 Configurations can be found in **Stores > Configuration > Catalog > Product Reviews**. From there the module output on the frontend can be enabled/disabled.
