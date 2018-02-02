@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  ~ Copyright © 2016 H&O E-commerce specialisten B.V. (http://www.h-o.nl/)
+  ~ Copyright © Reach Digital (https://www.reachdigital.io/)
   ~ See LICENSE.txt for license details.
   -->
+
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
     <system>
         <section id="ho_review" translate="label" type="text" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1">
