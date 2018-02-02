@@ -4,8 +4,7 @@
     "require": {
         "php": "~7.0.0",
         "magento/module-review": "100.*",
-        "magento/magento-composer-installer": "*",
-        "honl/magento2-base": "*"
+        "magento/magento-composer-installer": "*"
     },
     "suggest": {
 
