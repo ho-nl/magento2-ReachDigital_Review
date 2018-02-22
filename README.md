@@ -7,7 +7,7 @@ It's also possible to change the maximum amount of considerations.
 
 ## Installation
 ```BASH
-composer require honl/magento2-review
+composer require reach-digital/magento2-review
 php bin/magento module:enable Ho_Review
 ```
 
