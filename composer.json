@@ -1,11 +1,11 @@
 {
-    "name": "honl/magento2-review",
+    "name": "reach-digital/magento2-review",
     "description": "De review module voor Magento 2 webshops voegt plus- en minpunten functionaliteit toe aan de standaard Magento productreviews module.",
     "homepage": "https://github.com/ho-nl/magento2-ReachDigital_Review",
     "authors": [
         {
             "name": "Jeroen van Leusden - Reach Digital",
-            "email": "jeroen@h-o.nl"
+            "email": "jeroen@reachdigital.nl"
         }
     ],
     "require": {
