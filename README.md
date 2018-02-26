@@ -16,3 +16,11 @@ php bin/magento module:enable Ho_Review
 
 ## Desktop
 <img src="https://github.com/ho-nl/magento2-ReachDigital_Review/blob/master/docs/admin.png?raw=true" width="100%"/>
+
+## Credits
+
+Read more about this extension on our blog    
+https://www.reachdigital.nl/blog/productreviews-plus-en-minpunten-module-magento-2-webshops
+
+Developed by Reach Digital  
+https://www.reachdigital.nl
