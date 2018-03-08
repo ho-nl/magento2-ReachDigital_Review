@@ -6,20 +6,23 @@
 
 namespace Ho\Review\Setup;
 
-use Magento\Framework\Setup\InstallDataInterface;
+use Magento\Framework\Setup\InstallSchemaInterface;
 use Magento\Framework\Setup\ModuleContextInterface;
-use Magento\Framework\Setup\ModuleDataSetupInterface;
+use Magento\Framework\Setup\SchemaSetupInterface;
 
-class InstallData implements InstallDataInterface
+class InstallSchema implements InstallSchemaInterface
 {
     /**
      * {@inheritdoc}
+     *
      * @throws \Zend_Db_Exception
      */
-    public function install(ModuleDataSetupInterface $setup, ModuleContextInterface $context)
+    public function install(SchemaSetupInterface $setup, ModuleContextInterface $context)
     {
+        $setup->startSetup();
+
         $connection = $setup->getConnection();
-        $reviewConsideration = $setup->getConnection()->newTable('rating_consideration')
+        $reviewConsideration = $connection->newTable('rating_consideration')
             ->addColumn(
                 'consideration_id',
                 \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
@@ -62,5 +65,7 @@ class InstallData implements InstallDataInterface
             ->setComment('Review considerations');
 
         $connection->createTable($reviewConsideration);
+
+        $setup->endSetup();
     }
 }
